@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>영화 검색</title>
+</head>
+<body>
+
+<h2>영화 검색</h2>
+
+<form method="post" action="1.php">
+
+제목 :
+<input type="text" name="title" size="30">
+<input type="checkbox" name="use_like"> LIKE
+<input type="checkbox" name="case_sensitive"> 대소문자 구별
+<br><br>
+
+상영시간 :
+<input type="number" name="length_from" min="1" style="width:80px"> 분 ~
+<input type="number" name="length_to" min="1" style="width:80px"> 분
+<br><br>
+
+출생년도 이후 배우 출연 :
+<input type="number" name="birth_year" min="1900" max="2025" style="width:100px">
+
+성별 :
+<input type="radio" name="gender" value="male"> 남자
+<input type="radio" name="gender" value="female"> 여자
+<br><br>
+
+<input type="submit" value="검색">
+<input type="reset" value="초기화">
+
+</form>
+
+</body>
+</html>
