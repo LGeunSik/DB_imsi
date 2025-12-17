@@ -1,3 +1,17 @@
+/*
+[Trigger 제목]
+starplays 뷰 INSERT 시 영화·배우 자동 생성 및 출연 관계 일괄 처리 트리거
+
+[코드 동작 흐름 설명]
+1) starplays 뷰에 INSERT가 발생하면 실행되는 INSTEAD OF INSERT 트리거이다.
+2) 입력된 영화(title, year)가 movie 테이블에 존재하는지 확인한다.
+3) 영화가 존재하지 않으면 기존 영화들의 제작자 분포를 기준으로 제작자를 선택하거나 임의로 선택하여 영화를 생성한다.
+4) 입력된 배우(name)가 moviestar 테이블에 존재하는지 검사한다.
+5) 배우가 없을 경우 가장 최근 출생 배우의 성별을 참고하거나 난수를 이용해 성별을 결정한다.
+6) my_package 패키지의 함수들을 이용해 배우 주소를 자동 생성한 후 moviestar 테이블에 삽입한다.
+7) 영화와 배우가 준비된 상태에서 starsin 테이블에 출연 관계를 최종적으로 등록한다.
+*/
+
 create or replace trigger starplays_trigger
 instead of insert on starplays
 for each row
