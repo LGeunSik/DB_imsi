@@ -1,3 +1,16 @@
+/*
+[PL/SQL 블록 제목]
+주소 키워드별 영화사 임원 평균 재산 및 상세 목록 조회 프로그램
+
+[코드 동작 흐름 설명]
+1) 주소 검색에 사용할 키워드 목록을 컬렉션(key_tab)으로 정의하고 초기화한다.
+2) 각 키워드에 대해 movieexec 테이블에서 해당 주소를 포함하는 임원들의 평균 재산을 동적 SQL로 계산한다.
+3) 평균값이 NULL인 경우 해당 키워드에 대한 정보가 없음을 출력한다.
+4) 평균값이 존재하면 동일한 조건의 동적 SQL을 이용해 REF CURSOR를 OPEN하여 상세 목록을 조회한다.
+5) REF CURSOR를 이용해 조회 결과를 한 행씩 FETCH하며 번호를 매겨 출력한다.
+6) 모든 키워드에 대해 위 과정을 반복한 후 PL/SQL 블록을 종료한다.
+*/
+
 declare
     type key_tab is table of varchar2(50);
     keywords key_tab := key_tab('uk','_','california','zzz','new york','texas','chicago');
