@@ -1,3 +1,16 @@
+/*
+[Trigger 제목]
+movieexec 테이블 UPDATE 시 임원 정보 무결성 유지 및 자동 보정 트리거
+
+[코드 동작 흐름 설명]
+1) movieexec 테이블의 레코드가 UPDATE되기 전에 실행되는 BEFORE UPDATE 트리거이다.
+2) 수정 대상 임원이 영화사 사장(president) 또는 영화 제작자인 경우 이름 변경을 허용하지 않는다.
+3) networth가 NULL로 수정될 경우, 기존 임원 중 최대 재산값으로 자동 보정한다.
+4) networth가 증가한 경우 평균 재산과 비교하여 조건을 만족하면 임원을 임의의 영화사 사장으로 지정한다.
+5) 해당 임원이 배우로 출연한 이력이 있는 경우 주소 정보를 경고 문구 형태로 수정한다.
+6) 위 조건들을 통해 임원 정보 변경 시 데이터 일관성과 의미를 유지한다.
+*/
+
 create or replace trigger exec_update
 before update on movieexec
 for each row
