@@ -1,3 +1,17 @@
+/*
+[PL/SQL 실습 제목]
+제약조건 위반 상황 테스트 및 예외 처리 실습 프로그램
+
+[코드 동작 흐름 설명]
+1) test, temp 테이블을 삭제 후 재생성하여 기본 키, CHECK, 외래키 제약조건을 설정한다.
+2) 초기 데이터를 test와 temp 테이블에 삽입하여 참조 관계를 만든다.
+3) 여러 개의 이름과 나이 값을 컬렉션으로 준비하여 반복 삽입을 시도한다.
+4) 동적 SQL을 사용해 test와 temp 테이블에 데이터를 삽입하고, 특정 조건에서 DELETE 및 UPDATE를 수행한다.
+5) 중복 키, NULL 값, CHECK 제약조건, 외래키 제약조건 위반을 각각 예외로 처리한다.
+6) 각 예외 발생 시 인덱스 번호와 함께 원인을 출력한다.
+7) 모든 처리가 끝난 후 test와 temp 테이블의 최종 데이터를 출력하여 결과를 확인한다.
+*/
+
 drop table temp cascade constraints
 /
 drop table test cascade constraints
@@ -63,16 +77,3 @@ begin
             when no_data_found then
                 dbms_output.put_line(i||' : 존재하지 않는 데이터 참조');
             when others then
-                dbms_output.put_line(i||' : 기타 오류 - '||sqlerrm);
-        end;
-    end loop;
-    dbms_output.put_line(lpad(' ', 50, '*'));
-    for t in (select * from test) loop
-        dbms_output.put_line(t.name||', '||t.age||', '||t.address);
-    end loop;
-    dbms_output.put_line(lpad(' ', 50, '*'));
-    for t in (select * from temp) loop
-        dbms_output.put_line(t.num||', '||t.name);
-    end loop;
-end;
-/
