@@ -1,3 +1,17 @@
+/*
+[Trigger 제목]
+movie 테이블 INSERT 시 영화 속성 자동 보완 및 연관 데이터 할당 트리거
+
+[코드 동작 흐름 설명]
+1) movie 테이블에 새로운 레코드가 INSERT되기 전에 실행되는 BEFORE INSERT 트리거이다.
+2) 상영시간(length)이 NULL인 경우, 기존 영화들의 평균 상영시간을 계산해 자동으로 설정한다.
+3) incolor 값이 NULL이면 기본값으로 'true'를 설정한다.
+4) studioname이 NULL인 경우, 기존 영화가 가장 적은 영화사를 선택해 균형 있게 배정한다.
+5) 아직 영화 데이터가 하나도 없는 경우에는 studio 테이블에서 임의의 영화사를 선택한다.
+6) producerno가 NULL이면 movieexec 테이블에서 임의의 제작자를 선택해 자동 할당한다.
+7) 이를 통해 영화 삽입 시 필수 속성과 연관 정보가 누락되지 않도록 보장한다.
+*/
+
 create or replace trigger movie_insert
 before insert on movie
 for each row
