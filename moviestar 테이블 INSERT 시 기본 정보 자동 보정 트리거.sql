@@ -1,3 +1,16 @@
+/*
+[Trigger 제목]
+moviestar 테이블 INSERT 시 기본 정보 자동 보정 트리거 (birthdate, address, gender)
+
+[코드 동작 흐름 설명]
+1) moviestar 테이블에 새로운 배우가 INSERT되기 전에 실행되는 BEFORE INSERT 트리거이다.
+2) birthdate가 입력되지 않은 경우, 1980-01-01을 기준으로 임의의 날짜를 생성하여 자동으로 설정한다.
+3) address가 입력되지 않은 경우, 서울시 내 구·동·번지를 조합하여 임의의 주소를 생성한다.
+4) gender가 입력되지 않은 경우, 해당 배우보다 생년이 어린 기존 배우들의 성별 분포를 비교한다.
+5) 남녀 수가 다른 경우 더 많은 쪽의 성별을 선택하고, 동일한 경우에는 난수를 이용해 성별을 결정한다.
+6) 최종적으로 생성된 birthdate, address, gender 값을 :NEW 레코드에 반영한 후 INSERT를 수행한다.
+*/
+
 create or replace trigger star_insert
 before insert on moviestar
 for each row
